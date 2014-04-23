@@ -70,12 +70,12 @@ you can get a JSON blob describing the last client probe using:
 
 	```pushapi.myserver.com:4567/clients/{mac}```
 
-where {mac} is the client mac address. For example,
+	where {mac} is the client mac address. For example,
 	
 	```http://pushapi.myserver.com:4567/clients/34:23:ba:a6:75:70```
 
-may return
-	
+	may return
+
 	```{"id":65,"mac":"34:23:ba:a6:75:70","seenAt":"Fri Apr 18 00:01:41.479 UTC 2014","lat":37.77059042088197,"lng":-122.38703445525945}```
 
 You can also view the sample frontend at ```http://pushapi.myserver.com:4567/```
