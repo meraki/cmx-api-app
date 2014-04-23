@@ -27,19 +27,19 @@ function initialize() {
   })
 
   $('#track').click(startLookup);
-  
+
   $('#track').bind("enterKey", startLookup);
-  
+
   $('#all').click(function() {
     startLookupAll();
   });
-  
+
   $(document).on("click", ".client-filter", function(e) {
     var mac = $(this).data('mac');
     $('#mac-field').val(mac);
     startLookup();
   });
-      
+
   startLookupAll();
 }
 
@@ -73,7 +73,7 @@ function track(client) {
   clearAll();
   if (client != null && client.lat != null) {
     var pos = new google.maps.LatLng(client.lat, client.lng);
-	  $('#last-mac').text("" + lastMac + " last seen on " + client.seenString + 
+	  $('#last-mac').text("" + lastMac + " last seen on " + client.seenString +
 	    " with " + client.nSamples + " samples and uncertainty " + client.unc.toFixed(1) + " meters (reloading every 20 seconds)");
     map.setCenter(pos);
     marker.setMap(map);
