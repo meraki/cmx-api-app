@@ -21,8 +21,8 @@ This application show you how to get started using the [Cisco Meraki](https://me
 ### Software requirements:
 
 - Ensure you have Ruby 1.9 installed. If you don’t, consider using [RVM](https://rvm.io) to install and manage your Ruby versions.
-- Ensure that you have the sinatra gem installed; if you don't, do `gem install sinatra` via the command line in your project directory.
-- Ensure that you have the data_mapper gem installed; if you don't, do `gem install data_mapper` via the command line in your project directory.
+- Ensure that you have the sinatra gem installed; if you don’t, do `gem install sinatra` via the command line in your project directory.
+- Ensure that you have the data_mapper gem installed; if you don’t, do `gem install data_mapper` via the command line in your project directory.
 - Ensure you have the sqlite adapter installed; if you don’t, do `gem install dm-sqlite-adapter` via the command line in your project directory.
      
 ### Network infrastructure requirements:
@@ -34,7 +34,7 @@ This application show you how to get started using the [Cisco Meraki](https://me
 
 
 ## Running the app
-Let's say you plan to run this app on a server you control called pushapi.myserver.com.
+Let’s say you plan to run this app on a server you control called pushapi.myserver.com.
 
 1. Go to the Cisco Meraki dashboard and configure the CMX Location Push API (find it under Organization > Settings) with the url `http://pushapi.myserver.com:4567/events`
 2. Choose a secret and enter it into the dashboard
@@ -42,7 +42,7 @@ Let's say you plan to run this app on a server you control called pushapi.myserv
 4. Pass the secret and validation code to this server when you start it:
 
 	```sample_location_server.rb <secret> <validator>```
-5. You can change the bind interface (default 0.0.0.0) and port (default 4567)
+5. You can change the bind interface (default: 0.0.0.0) and port (default: 4567)
 using Sinatra's -o and -p option flags:
 
 	```sample_location_server.rb -o <interface> -p <port> <secret> <validator>```
@@ -60,7 +60,7 @@ is receiving connections on the port using
 
 7. Once the Meraki cloud has confirmed that the URL you provided returns the expected
 validation code, it will begin posting events to your URL. For example, when
-a client probes one of your access points, you'll see a log message like
+a client probes one of your access points, you’ll see a log message like
 this:
 
 	```[2014-03-26T11:51:57.920806 #25266]  INFO -- : client aa:bb:cc:dd:ee:ff seen on ap 11:22:33:44:55:66 with rssi 24 on Tue Mar 26 11:50:31.836 UTC 2014 at (37.703678, -122.45089)```
@@ -70,19 +70,17 @@ you can get a JSON blob describing the last client probe using:
 
 	```pushapi.myserver.com:4567/clients/{mac}```
 
-	where {mac} is the client mac address. For example,
+where {mac} is the client mac address. For example,
 	
 	```http://pushapi.myserver.com:4567/clients/34:23:ba:a6:75:70```
 
-	may return
+may return
 	
-	```{"id":65,"mac":"34:23:ba:a6:75:70","seenAt":"Fri Apr 18 00:01:41.479 UTC 2014",
-  "lat":37.77059042088197,"lng":-122.38703445525945}```
+	```{"id":65,"mac":"34:23:ba:a6:75:70","seenAt":"Fri Apr 18 00:01:41.479 UTC 2014","lat":37.77059042088197,"lng":-122.38703445525945}```
 
-	You can also view the sample frontend at ```http://pushapi.myserver.com:4567/```
+You can also view the sample frontend at ```http://pushapi.myserver.com:4567/```
 
-Try connecting your mobile device to your network, and entering your mobile device‘s WiFi MAC in
-the frontend.
+Try connecting your mobile device to your network, and entering your mobile device‘s WiFi MAC in the frontend.
 
 ## Copyright and license
 
