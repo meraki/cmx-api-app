@@ -1,51 +1,51 @@
 html, body {
-    height: 100%;
-    margin: 5px;
-    padding: 0px;
+  height: 100%;
+  margin: 5px;
+  padding: 0px;
 }
 
 #map-canvas {
-	height: 100%;
+  height: 100%;
 }
 
-html, body, p, div, button {
-    font-family:  "proxima-nova-1","proxima-nova-2", "Helvetica Neue", Helvetica, verdana, sans-serif;
+html, body, p, div, button, input {
+  font-family:  "proxima-nova-1","proxima-nova-2", "Helvetica Neue", Helvetica, verdana, sans-serif;
 }
 
 h1 {
-	color: #78be20;
-	font-size: 275%;
-	padding: 0px;
-	margin-top: 10px;
-	margin-bottom: 10px;
+  color: #78be20;
+  font-size: 275%;
+  padding: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 table {
-	border: 0px;
-	padding: 0px;
+  border: 0px;
+  padding: 0px;
 }
 
 td {
-	vertical-align: top;
+  vertical-align: top;
 }
 
 div {
-	padding-top: 5px;
+  padding-top: 5px;
 }
 
 #last-mac {
-	color: #606060;
+  color: #606060;
 }
 
 .small {
-	font-size: 80%;
+  font-size: 80%;
 }
 
-button {
-	font-size: 100%;
-	font-style: bold;
+button, input {
+  font-size: 100%;
+  font-style: bold;
 }
 
 body {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }

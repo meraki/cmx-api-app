@@ -131,22 +131,20 @@ post '/events' do
   end
   map['probing'].each do |c|
     loc = c['location']
-    if loc != nil
-      cmac = c['client_mac']
-      lat = loc['lat']
-      lng = loc['lng']
-      seenString = c['last_seen']
-      seenMillis = c['last_seen_millis']
-      logger.info "client #{cmac} seen on ap #{c['ap_mac']} with rssi #{c['rssi']} on #{seenString} (#{seenMillis}) at (#{lat}, #{lng}})"
-      @client = Client.first_or_create(:mac => cmac)
-      if (seenMillis > @client.seenMillis)
-        @client.attributes = { :lat => lat, :lng => lng, 
-                               :seenString => seenString, :seenMillis => seenMillis,
-                               :unc => loc['unc'], :nSamples => loc['nSamples'] }
-        @client.save
-      elsif (@client.seenMillis == 0)
-        Client.delete(:mac => cmac)
-      end
+    return if loc == nil
+    cmac = c['client_mac']
+    lat = loc['lat']
+    lng = loc['lng']
+    seenString = c['last_seen']
+    seenMillis = c['last_seen_millis']
+    logger.info "client #{cmac} seen on ap #{c['ap_mac']} with rssi #{c['rssi']} on #{seenString} (#{seenMillis}) at (#{lat}, #{lng}})"
+    next if (seenMillis == 0)  # This probe is useless, so ignore it
+    client = Client.first_or_create(:mac => cmac)
+    if (seenMillis > client.seenMillis)
+      client.attributes = { :lat => lat, :lng => lng,
+                            :seenString => seenString, :seenMillis => seenMillis,
+                            :unc => loc['unc'], :nSamples => loc['nSamples'] }
+      client.save
     end
   end
   ""
@@ -159,13 +157,9 @@ end
 # and returns a client with a given mac address, or empty JSON
 # if the mac is not in the database.
 get '/clients/:mac' do |m|
-  @client = Client.first(:mac => m.downcase)  # Lowercase in case someone entered capital hex
-  logger.info("Retrieved client #{@client}")
-  if @client == nil
-    "{}"
-  else
-    JSON.generate(@client)
-  end
+  client = Client.first(:mac => m.downcase)  # Lowercase in case someone entered capital hex
+  logger.info("Retrieved client #{client}")
+  JSON.generate(client || "{}")
 end
 
 # This matches
