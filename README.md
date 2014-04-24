@@ -66,19 +66,17 @@ this:
 	```[2014-03-26T11:51:57.920806 #25266]  INFO -- : client aa:bb:cc:dd:ee:ff seen on ap 11:22:33:44:55:66 with rssi 24 on Tue Mar 26 11:50:31.836 UTC 2014 at (37.703678, -122.45089)```
 
 8. After your first client pushes start arriving (this may take a minute or two),
-you can get a JSON blob describing the last client probe using:
+you can get a JSON blob describing the last client probe(where {mac} is the client mac address): `pushapi.myserver.com:4567/clients/{mac}`
 
-	```pushapi.myserver.com:4567/clients/{mac}```
-
-	where {mac} is the client mac address. For example,
+9. An example:
 	
-	```http://pushapi.myserver.com:4567/clients/34:23:ba:a6:75:70```
-
+	`http://pushapi.myserver.com:4567/clients/34:23:ba:a6:75:70` 
+	
 	may return
+	
+	`{"id":65,"mac":"34:23:ba:a6:75:70","seenAt":"Fri Apr 18 00:01:41.479 UTC 2014","lat":37.77059042088197,"lng":-122.38703445525945}`
 
-	```{"id":65,"mac":"34:23:ba:a6:75:70","seenAt":"Fri Apr 18 00:01:41.479 UTC 2014","lat":37.77059042088197,"lng":-122.38703445525945}```
-
-You can also view the sample frontend at ```http://pushapi.myserver.com:4567/```
+You can also view the sample frontend at: ```http://pushapi.myserver.com:4567/```
 
 Try connecting your mobile device to your network, and entering your mobile device‘s WiFi MAC in the frontend.
 
