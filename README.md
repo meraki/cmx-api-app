@@ -69,7 +69,7 @@ this:
 	```[2014-03-26T11:51:57.920806 #25266]  INFO -- : client aa:bb:cc:dd:ee:ff seen on ap 11:22:33:44:55:66 with rssi 24 on Tue Mar 26 11:50:31.836 UTC 2014 at (37.703678, -122.45089)```
 
 8. After your first client pushes start arriving (this may take a minute or two),
-you can get a JSON blob describing the last client probe(where {mac} is the client mac address): `pushapi.myserver.com:4567/clients/{mac}`
+you can get a JSON blob describing the last client probe (where {mac} is the client mac address): `pushapi.myserver.com:4567/clients/{mac}`
 
 9. An example:
 	
