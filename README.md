@@ -4,12 +4,13 @@ This application show you how to get started using the [Cisco Meraki](https://me
 
 ## Table of contents
 
-- [Installation and Requirements](#installation-and-requirements)
+- [Installation and requirements](#installation-and-requirements)
 - [Running the app](#running-the-app)
+- [Sample output code](#sample-output-code)
 - [Copyright and license](#copyright-and-license)
 
 
-## Installation and Requirements
+## Installation and requirements
 
 
 ### Installation
@@ -71,17 +72,48 @@ this:
 8. After your first client pushes start arriving (this may take a minute or two),
 you can get a JSON blob describing the last client probe (where {mac} is the client mac address): `pushapi.myserver.com:4567/clients/{mac}`
 
-9. An example:
-	
-	`http://pushapi.myserver.com:4567/clients/34:23:ba:a6:75:70` 
-	
-	may return
-	
-	`{"id":65,"mac":"34:23:ba:a6:75:70","seenAt":"Fri Apr 18 00:01:41.479 UTC 2014","lat":37.77059042088197,"lng":-122.38703445525945}`
+9. You can also view the sample frontend at: `http://pushapi.myserver.com:4567/`. Try connecting your mobile device to your network, and entering your mobile device‘s WiFi MAC in the frontend.
 
-You can also view the sample frontend at: ```http://pushapi.myserver.com:4567/```
+## Sample output code
 
-Try connecting your mobile device to your network, and entering your mobile device‘s WiFi MAC in the frontend.
+The JSON blob sent by Meraki servers to your app is formatted as follows:
+
+```
+{
+  "client_mac":"02:18:2a:79:43:a0",
+  "ap_mac":"00:18:0a:79:08:60",
+  "last_seen_millis":1398446774882,
+  "last_seen":"Fri Apr 25 17:26:14.882 UTC 2014",
+  "rssi":"23",
+  "is_associated":"false",
+  "manufacturer":"Meraki",
+  "os":"unknown",
+  "location":{
+    "lng":-122.38765965945927,
+    "unc":15.13174349529074,
+    "status":"Success",
+    "nSamples":4,
+    "lat":37.77057805947924
+  }
+}
+```
+
+A specific client device’s details can be retrieved, for example:
+	
+`http://pushapi.myserver.com:4567/clients/34:23:ba:a6:75:70` 
+	
+may return
+	
+```
+{
+	"id":65,
+	"mac":"34:23:ba:a6:75:70",
+	"seenAt":"Fri Apr 18 00:01:41.479 UTC 2014",
+	"lat":37.77059042088197,"lng":-122.38703445525945
+}
+```
+
+
 
 ## Copyright and license
 
