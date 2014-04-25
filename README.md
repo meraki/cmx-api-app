@@ -21,9 +21,12 @@ This application show you how to get started using the [Cisco Meraki](https://me
 ### Software requirements:
 
 - Ensure you have Ruby 1.9 installed. If you don’t, consider using [RVM](https://rvm.io) to install and manage your Ruby versions.
-- Ensure that you have the sinatra gem installed; if you don’t, do `gem install sinatra` via the command line in your project directory.
-- Ensure that you have the data_mapper gem installed; if you don’t, do `gem install data_mapper` via the command line in your project directory.
-- Ensure you have the sqlite adapter installed; if you don’t, do `gem install dm-sqlite-adapter` via the command line in your project directory.
+
+#### Gems:
+
+- sinatra (if you don’t have it, run `gem install sinatra` via the command line in your project directory.)
+- data_mapper
+- dm-sqlite-adapter
      
 ### Network infrastructure requirements:
 
@@ -37,7 +40,7 @@ This application show you how to get started using the [Cisco Meraki](https://me
 Let’s say you plan to run this app on a server you control called pushapi.myserver.com.
 
 1. Go to the Cisco Meraki dashboard and configure the CMX Location Push API (find it under Organization > Settings) with the url `http://pushapi.myserver.com:4567/events`
-2. Choose a secret and enter it into the dashboard
+2. Choose a secret and enter it into the dashboard.
 3. Make note of the validation code that dashboard provides.
 4. Pass the secret and validation code to this server when you start it:
 
