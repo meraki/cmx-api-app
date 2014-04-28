@@ -42,13 +42,37 @@
 #   telnet pushapi.example.com 4567
 #
 # Once Dashboard has confirmed that the URL you provided returns the expected
-# validation code, it will begin posting events to your URL. For example, when
-# a client probes one of your access points, you'll see a log message like
-# this:
+# validation code, it will begin posting events to your URL. The events are
+# encapsulated in a form post, where each post's "data" field contains the JSON:
+#
+#   {"secret":<push secret>,"probing":[<probes>...]}
+#
+# Each probe JSON is composed of the CMX data fields. For example:
+#
+#   {
+#     "ap_mac":"11:22:33:44:55:66",
+#     "client_mac":"aa:bb:cc:dd:ee:ff",
+#     "rssi":"24",
+#     "is_associated":"false",
+#     "manufacturer":"Meraki",
+#     "os":"Linux",
+#     "last_seen":"Fri Apr 25 17:26:14.882 UTC 2014",
+#     "last_seen_millis":1398446774882,
+#     "location":{
+#       "lat":37.77057805947924,
+#       "lng":-122.38765965945927,
+#       "unc":15.13174349529074,
+#       "status":"Success",
+#       "nSamples":4}
+#    }
+#
+# This app will then begin logging the received JSON in a human-readable format.
+# For example, when a client probes one of your access points, you'll see a log
+# message like this:
 #
 #   [2013-03-26T11:51:57.920806 #25266]  INFO -- : client aa:bb:cc:dd:ee:ff
-#     seen on ap 11:22:33:44:55:66 with rssi 24 on Tue Mar 26 11:50:31.836 UTC
-#     2013 at (37.703678, -122.45089)
+#     seen on ap 11:22:33:44:55:66 with rssi 24 on Fri Apr 25 17:26:14.882 UTC 2014
+#     at (37.7706, -122.3877)
 #
 # After your first client pushes start arriving (this may take a minute or two),
 # you can get a JSON blob describing the last client probe using:
@@ -101,7 +125,6 @@ class Client
   property :lat,        Float
   property :lng,        Float
   property :unc,        Float
-  property :nSamples,   Integer
 end
 
 DataMapper.finalize
@@ -129,21 +152,23 @@ post '/events' do
     logger.warn "got post with bad secret: #{SECRET}"
     return
   end
+  logger.info "version is #{map['version']}"
+  return if map['version'] != '2.0'
   map['probing'].each do |c|
     loc = c['location']
-    return if loc == nil
-    cmac = c['client_mac']
+    next if loc == nil
+    cmac = c['clientMac']
     lat = loc['lat']
     lng = loc['lng']
-    seenString = c['last_seen']
-    seenMillis = c['last_seen_millis']
-    logger.info "client #{cmac} seen on ap #{c['ap_mac']} with rssi #{c['rssi']} on #{seenString} (#{seenMillis}) at (#{lat}, #{lng}})"
-    next if (seenMillis == 0)  # This probe is useless, so ignore it
+    seenString = c['seenTime']
+    seenMillis = c['seenEpoch']
+    logger.info "client #{cmac} seen on ap #{c['apMac']} with rssi #{c['rssi']} on #{seenString} (#{seenMillis}) at (#{lat}, #{lng})"
+    next if (seenMillis == nil || seenMillis == 0)  # This probe is useless, so ignore it
     client = Client.first_or_create(:mac => cmac)
-    if (seenMillis > client.seenMillis)
+    if (seenMillis > client.seenMillis)                    # If client was created, this will always be true
       client.attributes = { :lat => lat, :lng => lng,
                             :seenString => seenString, :seenMillis => seenMillis,
-                            :unc => loc['unc'], :nSamples => loc['nSamples'] }
+                            :unc => loc['unc'] }
       client.save
     end
   end

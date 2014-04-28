@@ -29,7 +29,7 @@
     if (client !== null && client.lat !== null) {
       var pos = new google.maps.LatLng(client.lat, client.lng);
       $('#last-mac').text("" + lastMac + " last seen on " + client.seenString +
-        " with " + client.nSamples + " samples and uncertainty " + client.unc.toFixed(1) + " meters (reloading every 20 seconds)");
+        " with uncertainty " + client.unc.toFixed(1) + " meters (reloading every 20 seconds)");
       map.setCenter(pos);
       clientMarker.setMap(map);
       clientMarker.setPosition(pos);
