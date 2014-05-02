@@ -1,0 +1,19 @@
+GET /echo/*msg      controllers.Application.echo(msg)
+
+GET /clients        controllers.Application.getAllClients
+
+GET /clients/       controllers.Application.getAllClients
+
+GET /clients/:mac   controllers.Application.getClient(mac)
+
+GET /events         controllers.Application.validate
+
+GET /events/        controllers.Application.validate
+
+POST /events        controllers.Application.receiveEvents
+
+POST /events/       controllers.Application.receiveEvents
+
+GET /               controllers.Assets.at(path="/public", file="index.html")
+
+GET /*file          controllers.Assets.at(path="/public", file)
