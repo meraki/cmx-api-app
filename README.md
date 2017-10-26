@@ -103,11 +103,11 @@ The JSON blob sent by Meraki servers to your app is formatted as follows:
     "manufacturer":"Meraki",
     "os":"Linux",
     "location":{
-      "lat":37.77057805947924
+      "lat":37.77057805947924,
       "lng":-122.38765965945927,
-      "unc":15.13174349529074,
-    },...]
-  }
+      "unc":15.13174349529074
+    }
+  }]
 }
 ```
 
